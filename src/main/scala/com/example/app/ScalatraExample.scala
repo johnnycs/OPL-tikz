@@ -1,4 +1,4 @@
-package org.scalatra
+package com.example.app
 
 import org.scalatra._
 
@@ -8,6 +8,16 @@ class ScalatraExample extends ScalatraServlet {
 //  before {
 //    contentType = "text/html"
 //  }
+
+  get("/draw") {
+    <html>
+
+      <center>
+        <canvas id="canvas" width="640" height="360" style="border:3px solid #000000;"></canvas>
+      </center>
+
+    </html>
+  }
 
   // parse matching requests, saving things prefixed with ':' as params
   get("/date/:year/:month/:day") {
@@ -32,7 +42,7 @@ class ScalatraExample extends ScalatraServlet {
   }
 
   // respond to '/' with a greeting
-  get("/") {
+  get("/hello") {
     <h1>Hello world!</h1>
   }
 
