@@ -61,14 +61,16 @@ class MyScalatraServlet extends MyScalatraWebAppStack with JacksonJsonSupport {
   case class Profile(name: String, girlfriend: String, gik: List[String])
   post("/john"){
 
-    // contentType = formats("json")
-    try { 
-      def p:Profile = parsedBody.extract[Profile]
-      println(p)
-      } 
+    try {
+      def a:String = params.getOrElse("gik","bossy")
+      println(a)
+      // contentType = formats("json")
+      // def p:Profile = parsedBody.extract[Profile]
+      // println(p)
+    } 
     catch {
         case e : Exception => e.printStackTrace()
-      }
+    }
 
   }
 
