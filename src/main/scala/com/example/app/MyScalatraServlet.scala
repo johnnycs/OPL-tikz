@@ -5,9 +5,10 @@ import org.scalatra._
 // JSON-related libraries
 import org.json4s.{DefaultFormats, Formats}
 
+import org.slf4j.{Logger, LoggerFactory}
+
 // JSON handling support from Scalatra
 import org.scalatra.json._
-
 
 
 class MyScalatraServlet extends MyScalatraWebAppStack with JacksonJsonSupport {
@@ -22,17 +23,19 @@ class MyScalatraServlet extends MyScalatraWebAppStack with JacksonJsonSupport {
   case class Edge(source: Int, target: Int)
   // case class Edge(attributes: Map[String, String])
 
-  case class Graph(nodes: List[Node], edges: List[Edge])
+  case class Graph(nodes: List[Node], edges: List[Edge], timestmp: Long)
 
   object GraphData {
 
   /**
    * Some fake flowers data so we can simulate retrievals.
    */
+    val timestamp: Long = System.currentTimeMillis / 1000
 
     var all = Graph(
                     List(Node(1,"A", 313, 190)),
-                    List(Edge(0,0)))
+                    List(Edge(0,0)),
+                    timestamp)
       
   }
 
@@ -47,6 +50,28 @@ class MyScalatraServlet extends MyScalatraWebAppStack with JacksonJsonSupport {
 //    contentType = "text/html"
 //  }
 
+// case class Person(id: Int, name: String)
+
+// post("/create") {
+//   parsedBody.extract[Person]
+// }
+
+  // val logger =  LoggerFactory.getLogger(getClass)
+  
+  case class Profile(name: String, girlfriend: String, gik: List[String])
+  post("/john"){
+
+    // contentType = formats("json")
+    try { 
+      def p:Profile = parsedBody.extract[Profile]
+      println(p)
+      } 
+    catch {
+        case e : Exception => e.printStackTrace()
+      }
+
+  }
+
   get("/") {
     <html>
       <body>
@@ -58,22 +83,21 @@ class MyScalatraServlet extends MyScalatraWebAppStack with JacksonJsonSupport {
     </html>
   }
 
+  get("/throw"){
+    throw new Exception("John walks his gik.")
+  }
+
   // <script type="application/javascript" src="/js/d3.min.js"></script>
   // submit will hv to post to /graph later on
   get("/draw") {
-    <html>
+    redirect("/js/script.js")
+  }
 
-      
-      <center>
-        
-        <canvas id="canvas" width="640" height="360" style="border:3px solid #000000;"></canvas>
-        <script type="text/javascript" src="js/script.js"></script>
-      </center>
+  get("/boww") {
+    // return json
+    contentType = formats("json")
 
-      <button>Submit</button> 
-      <button disabled="true">Create Edge</button>
 
-    </html>
   }
 
 // parse matching requests, saving things prefixed with ':' as params

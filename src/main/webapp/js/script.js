@@ -47,42 +47,96 @@
 
 
 
-var button = document.createElement("button");
-button.innerHTML = "Add Node";
+// var button = document.createElement("button");
+// button.innerHTML = "Add Node";
 
-var body = document.getElementsByTagName("body")[0];
-body.appendChild(button);
+// var body = document.getElementsByTagName("body")[0];
+// body.appendChild(button);
 
-var elem = document.getElementById('canvas'),
-    elemLeft = elem.offsetLeft,
-    elemTop = elem.offsetTop,
-    ctx = elem.getContext('2d')
-    ctx.beginPath();
+function addNode() {
 
-button.addEventListener("click", function() {
+  var elem = document.getElementById('canvas'),
+        elemLeft = elem.offsetLeft,
+        elemTop = elem.offsetTop,
+        ctx = elem.getContext('2d')
+
+  var button = document.getElementById('button');
+
     button.disabled = true;
     console.log("sth clicked");
     once();
-});
-
-function once() {
-    button.removeEventListener("click", arguments.callee);
-    drawCircle();
+  
+    function once() {
+        button.removeEventListener("click", arguments.callee);
+        drawCircle();
+    }
+  
+    function drawCircle() {
+        elem.addEventListener('click', function(event) {
+        var x = event.pageX - elemLeft,
+            y = event.pageY - elemTop;
+  
+        ctx.beginPath();
+        ctx.arc(x,y,10,0,2*Math.PI);
+        ctx.stroke();
+        
+        console.log(x, y);
+        elem.removeEventListener("click", arguments.callee);
+        button.disabled = false;
+        });
+    }
 }
 
-function drawCircle() {
-    elem.addEventListener('click', function(event) {
-    var x = event.pageX - elemLeft,
-        y = event.pageY - elemTop;
+function magic() {
 
-    ctx.arc(x,y,10,0,2*Math.PI);
-    ctx.stroke();
-    
-    console.log(x, y);
-    elem.removeEventListener("click", arguments.callee);
-    button.disabled = false;
-    });
+  function onSuc(data){
+    console.log(data)
+  }
+
+  function onFai(){
+
+  }
+
+  $.ajax({
+    dataType: "json",
+    url: "/graph",
+    data: null,
+    success: onSuc,
+    fail: onFai
+  });
+
 }
+
+function magic2() {
+  data = {
+    "name": "john",
+    "girlfriend": "bow",
+    "gik": ["bossy", "taewon"]
+  }
+
+  $.ajax({
+    type: "POST",
+    dataType: "json",
+    url: "/john",
+    data: data,
+  });
+
+}
+
+
+// function magic(){
+//   var jqxhr = $.ajax( "/graph" )
+//     .done(function() {
+//       alert( "success" );
+//     })
+//     .fail(function() {
+//       alert( "error" );
+//     })
+// }
+
+// function hello(){
+//   alert('hello')
+// }
 
 
 
