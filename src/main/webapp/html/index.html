@@ -35,9 +35,19 @@
 
         <fieldset>
           <legend>Edge:</legend>
+
             <div class="form-group">
-                <button disabled="true" class="btn btn-primary">Create Edge</button>
+              <input type="text" class="form-control" value="" id="edgeFrom" placeholder="From"></input>
+            </div>   
+
+            <div class="form-group">
+              <input type="text" class="form-control" value="" id="edgeTo" placeholder="To"></input>
+            </div> 
+
+            <div class="form-group">
+              <button class="btn btn-primary" onclick="addEdge()" id="edgeButton">Create Node</button>
             </div>
+
         </fieldset>
 
       </div>
