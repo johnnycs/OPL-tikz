@@ -1,27 +1,60 @@
 <html>
+
   <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css">
   </head>
+
+  <section>
+    <div class="row">
+      <div class="col-sm-12">
+        <h1 class="text-center">TIKZ <small>Graph to TIKZ to Latex</small></h1>
+      </div>
+      <div ncy-breadcrumb></div>
+    </div>
+  </section>
+
   <body>
   
-  <center>
-    <canvas id="canvas" width="640" height="360" style="border:3px solid #000000;"></canvas>
-  </center>
+    <div class="container-fluid">
 
-  <button class="btn btn-primary">Submit</button> 
-  <button disabled="true" class="btn btn-primary">Create Edge</button>
-  <button class="btn btn-primary" onclick="addNode()" id="button">Create Node</button>
-  <button onclick="magic()">Magic</button>
-  <button onclick="magic2()">Magic2</button>
+      <div class="col-md-4">
 
-  <script
-  src="https://code.jquery.com/jquery-3.1.1.min.js"
-  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-  crossorigin="anonymous"></script>
-  
-  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
-  <script type="text/javascript" src="/js/script.js"></script>
-  
+        <fieldset>
+        <legend>Node:</legend>
+          <div class="form-group">
+            <input type="text" class="form-control" value="" id="nodeLabel" placeholder="Node's label"></input>
+
+          </div>   
+          <div class="form-group">
+            <button class="btn btn-primary" onclick="addNode()" id="nodeButton">Create Node</button>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Edge:</legend>
+            <div class="form-group">
+                <button disabled="true" class="btn btn-primary">Create Edge</button>
+            </div>
+        </fieldset>
+
+      </div>
+
+      <canvas id="canvas" width="640" height="360" style="border:3px solid #000000;"></canvas>
+    
+    <br>
+
+    <button onclick="magic()">Magic</button>
+    <button onclick="magic2()">Magic2</button>
+
+    <script
+    src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous"></script>
+    
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript" src="/js/script.js"></script>
+    
+    </div>
   </body>
 </html>
