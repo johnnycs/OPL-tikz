@@ -7,12 +7,11 @@ object jsonToTikz extends App {
 	object MapNode extends CC[Map[String, Any]]
 	object node extends CC[List[Any]]
 	object title extends CC[String]
-	object source extends CC[Double]TorpongJuntree
+	object source extends CC[Double]
 
 
 
 
-	TorpongJuntreeTorpo Too dgdgdsnfkwepnewqtipoqklq;';l;ljop'lkjnlplkljk[pn[kpok]]
 	object target extends CC[Double]
 	object id extends CC[Double]
 	object x extends CC[Double]
@@ -64,6 +63,6 @@ object jsonToTikz extends App {
 	}
 
 	//write to file
-    writer.write(header+middle+footer)
+    writer.write(header+middle+footer+f"%$lines")
     writer.close()
 }
