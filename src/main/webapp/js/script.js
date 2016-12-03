@@ -17,6 +17,8 @@ function addNode() {
 
   console.log(nodeLabel)
 
+  nodeLabel = "";
+
     nodeButton.disabled = true;
     console.log("sth clicked");
     once();
