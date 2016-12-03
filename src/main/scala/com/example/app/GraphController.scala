@@ -11,7 +11,7 @@ import org.slf4j.{Logger, LoggerFactory}
 import org.scalatra.json._
 
 
-class MyScalatraServlet extends MyScalatraWebAppStack with JacksonJsonSupport {
+class GraphController extends MyScalatraWebAppStack with JacksonJsonSupport {
 
   protected implicit val jsonFormats: Formats = DefaultFormats.withBigDecimal
 
@@ -59,11 +59,13 @@ class MyScalatraServlet extends MyScalatraWebAppStack with JacksonJsonSupport {
   // val logger =  LoggerFactory.getLogger(getClass)
   
   case class Profile(name: String, girlfriend: String, gik: List[String])
+
   post("/john"){
 
     try {
-      def a:String = params.getOrElse("gik","bossy")
+      def a: String = params.getOrElse("gik","bossy")
       println(a)
+
       // contentType = formats("json")
       // def p:Profile = parsedBody.extract[Profile]
       // println(p)
