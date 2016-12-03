@@ -1,0 +1,16 @@
+\documentclass{article}
+	\usepackage{tikz}
+		\begin{document}
+			\begin{tikzpicture}
+			\node at (10,10) [circle,draw] (2) {Node};
+			\node at (15,10) [circle,draw] (3) {Node};
+			\node at (10,15) [circle,draw] (4) {Node};
+			\node at (15,15) [circle,draw] (5) {Node};
+			\node at (20,20) [circle,draw] (6) {Node};
+			\draw[-] (4) to[] (3);
+			\draw[-] (3) to[] (5);
+			\draw[-] (5) to[] (2);
+			\draw[-] (2) to[] (4);
+			\draw[-] (4) to[] (6);
+			\end{tikzpicture}
+		\end{document}
