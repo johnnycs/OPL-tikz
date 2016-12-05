@@ -1,48 +1,132 @@
 
-// var button = document.createElement("button");
-// button.innerHTML = "Add Node";
+var svg = d3.select("#chart").append("svg")
+                             .attr("width", 640)
+                             .attr("height", 360)
+                             .style("border", "1px black solid");
 
-// var body = document.getElementsByTagName("body")[0];
-// body.appendChild(button);
+var graph = {"nodes": [], "edges": []};
+var nodeId = 0;
 
 function addNode() {
 
-  var elem = document.getElementById('canvas'),
-        elemLeft = elem.offsetLeft,
-        elemTop = elem.offsetTop,
-        ctx = elem.getContext('2d')
-
+  var singleton = {id:null, x:null, y:null, title:null};
+  var clicked = false;
   var nodeButton = document.getElementById('nodeButton');
   var nodeLabel = document.getElementById('nodeLabel').value;
 
-  console.log(nodeLabel)
+  singleton.title = nodeLabel;
+  singleton.id = nodeId;
+  nodeId ++;
+
 
     nodeButton.disabled = true;
     console.log("sth clicked");
-    once();
-  
-    function once() {
-        nodeButton.removeEventListener("click", arguments.callee);
-        drawCircle();
-    }
-  
-    function drawCircle() {
-        elem.addEventListener('click', function(event) {
-        var x = event.pageX - elemLeft,
-            y = event.pageY - elemTop;
-  
-        ctx.beginPath();
-        ctx.arc(x,y,20,0,2*Math.PI);
-        ctx.stroke();
-        
-        console.log(x, y);
-        elem.removeEventListener("click", arguments.callee);
-        nodeButton.disabled = false;
+    doCircle();
+
+    function doCircle() {
+
+      function drawCircle(x, y) {
+          console.log('Drawing circle at', x, y);
+          svg.append("circle")
+              // .attr('class', 'click-circle')
+              .attr("cx", x)
+              .attr("cy", y)
+              .attr("r", 23)
+              .attr("stroke","black")
+              .style("fill", "none");
+              
+          svg.append("text")
+              .attr("x", x - 6.5)
+              .attr("y", y + 5)
+              .text(nodeLabel)
+              .attr("fill", "black");
+
+          nodeButton.disabled = false;
+      }
+
+        svg.on('click', function() {
+
+            if (!clicked) {
+              var coords = d3.mouse(this);
+              // console.log(coords);
+
+              drawCircle(coords[0], coords[1]);
+              clicked = true;
+
+              singleton.x = coords[0];
+              singleton.y = coords[1];
+              console.log(singleton);
+
+              graph.nodes.push(singleton)
+              console.log(graph)
+            }
         });
     }
 }
 
+function addEdge() {
 
+  console.log(graph.nodes)
+
+  var edge = {"source":null, "target":null};
+
+  var edgeFrom = document.getElementById('edgeFrom').value;
+  var edgeTo = document.getElementById('edgeTo').value;
+  var x1, y1, xy1_id, x2, y2, xy2_id = null;
+
+  console.log("edgeFrom: ", edgeFrom)
+  console.log("edgeTo: ", edgeTo)
+
+  for(var i = 0; i < graph.nodes.length; i++) {
+
+    if (graph.nodes[i].title == edgeFrom) {
+      console.log("from",graph.nodes[i])
+      x1 = graph.nodes[i].x;
+      y1 = graph.nodes[i].y;
+      xy1_id = graph.nodes[i].id;
+    }
+
+    if (graph.nodes[i].title == edgeTo) {
+      console.log("to",graph.nodes[i])
+      x2 = graph.nodes[i].x
+      y2 = graph.nodes[i].y
+      xy2_id = graph.nodes[i].id;
+    }
+  }
+
+  // math stuff
+  var refX = 23 + (15 * 2)
+
+  svg.append("svg:defs").append("svg:marker")
+    .attr("id", "triangle")
+    .attr("refX", refX)
+    .attr("refY", 6)
+    .attr("markerWidth", 15)
+    .attr("markerHeight", 15)
+    .attr("orient", "auto")
+    .append("path")
+    .attr("d", "M 0 0 12 6 0 12 3 6")
+    .style("fill", "black");
+
+  svg.append("line")
+    .attr("x1",  x1)
+    .attr("y1", y1)
+    .attr("x2", x2)
+    .attr("y2", y2)
+
+    .attr("stroke-width", 1)
+    .attr("stroke", "black")
+    .attr("marker-end", "url(#triangle)");
+
+    edge.source = xy1_id;
+    edge.target = xy2_id;
+
+    graph.edges.push(edge)
+    console.log(graph)
+
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////
 
 function magic() {
 
@@ -93,50 +177,47 @@ function magic2() {
 //   alert('hello')
 // }
 
-      
-// function draftCircle() {
 
-//   console.log("draftCircle()")
+// var button = document.createElement("button");
+// button.innerHTML = "Add Node";
 
-//   document.addEventListener("DOMContentLoaded", init, false);
+// var body = document.getElementsByTagName("body")[0];
+// body.appendChild(button);
 
-//   function init() {
-    
-//     var canvas = document.getElementById("canvas");
-//     canvas.addEventListener("mousedown", getPosition, false);
+// function addNode() {
 
-//   }
+//   var elem = document.getElementById('canvas'),
+//         elemLeft = elem.offsetLeft,
+//         elemTop = elem.offsetTop,
+//         ctx = elem.getContext('2d')
 
-//   function getPosition(event) {
-    
-//     var x = new Number();
-//     var y = new Number();
-//     var canvas = document.getElementById("canvas");
-//     var ctx = canvas.getContext("2d");
-//     ctx.beginPath();
+//   var nodeButton = document.getElementById('nodeButton');
+//   var nodeLabel = document.getElementById('nodeLabel').value;
 
-//     if (event.x != undefined && event.y != undefined)
-//     {
-//       x = event.x;
-//       y = event.y;
+//   console.log(nodeLabel)
+
+//     nodeButton.disabled = true;
+//     console.log("sth clicked");
+//     once();
+  
+//     function once() {
+//         nodeButton.removeEventListener("click", arguments.callee);
+//         drawCircle();
 //     }
-//     else // Firefox method to get the position
-//     {
-//       x = event.clientX + document.body.scrollLeft +
-//           document.documentElement.scrollLeft;
-//       y = event.clientY + document.body.scrollTop +
-//           document.documentElement.scrollTop;
+  
+//     function drawCircle() {
+//         elem.addEventListener('click', function(event) {
+//         var x = event.pageX - elemLeft,
+//             y = event.pageY - elemTop;
+  
+//         ctx.beginPath();
+//         ctx.arc(x,y,20,0,2*Math.PI);
+//         ctx.stroke();
+        
+//         console.log(x, y);
+//         elem.removeEventListener("click", arguments.callee);
+//         nodeButton.disabled = false;
+//         });
 //     }
-
-//     x -= canvas.offsetLeft;
-//     y -= canvas.offsetTop;
-
-
-//     ctx.arc(x,y,10,0,2*Math.PI);
-//     ctx.stroke();
-
-//     console.log('x: ' + x + '  y: ' + y);
-
-//   }
 // }
-
+      

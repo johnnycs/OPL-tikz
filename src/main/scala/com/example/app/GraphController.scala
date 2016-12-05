@@ -100,8 +100,6 @@ class GraphController extends MyScalatraWebAppStack with JacksonJsonSupport {
   get("/boww") {
     // return json
     contentType = formats("json")
-
-
   }
 
 // parse matching requests, saving things prefixed with ':' as params
