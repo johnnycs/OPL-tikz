@@ -63,6 +63,6 @@ object jsonToTikz extends App {
 	}
 
 	//write to file
-    writer.write(header+middle+footer+f"%$lines")
+    writer.write(header+middle+footer+"\n%"+f"$lines")
     writer.close()
 }
