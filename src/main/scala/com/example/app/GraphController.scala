@@ -15,7 +15,7 @@ class GraphController extends MyScalatraWebAppStack with JacksonJsonSupport {
 
   protected implicit val jsonFormats: Formats = DefaultFormats.withBigDecimal
 
-  case class Node(id: Int, title: String, x: Int, y: Int)
+  case class Node(id: Int, title: String, x: Long, y: Long)
 
                                           // solves the problem of
                                           // rigid class
@@ -59,12 +59,19 @@ class GraphController extends MyScalatraWebAppStack with JacksonJsonSupport {
   // val logger =  LoggerFactory.getLogger(getClass)
   
   case class Profile(name: String, girlfriend: String, gik: List[String])
+  case class JohnGik(gik: String)
 
   post("/john"){
 
     try {
-      def a: String = params.getOrElse("gik","bossy")
+
+      def a: String = params.getOrElse("name","bossy")
       println(a)
+
+      JohnGik(a)
+
+//      def a: String = params.k
+
 
       // contentType = formats("json")
       // def p:Profile = parsedBody.extract[Profile]
@@ -135,10 +142,10 @@ class GraphController extends MyScalatraWebAppStack with JacksonJsonSupport {
   }
 
   // set a session var
-  get("/set/:session_val") {
-    session("val") = params("session_val")
-    <h1>Session var set</h1>
-  }
+//  get("/set/:session_val") {
+//    session("val") = params("session_val")
+//    <h1>Session var set</h1>
+//  }
 
   // see session var
   get("/see") {

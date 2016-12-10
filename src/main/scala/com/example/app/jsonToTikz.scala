@@ -1,24 +1,21 @@
 object jsonToTikz extends App {
 	import scala.util.parsing.json._
 	import java.io._
-	val lines = scala.io.Source.fromFile("mydag.json").mkString
+	// val lines = scala.io.Source.fromFile("mydag.json").mkString
+	val lines = """{"nodes":[{"id":2,"title":"Node","x":10,"y":10,"data":{"type":"generic"}},{"id":3,"title":"Node","x":15,"y":10,"data":{"type":"generic"}},{"id":4,"title":"Node","x":10,"y":15,"data":{"type":"generic"}},{"id":5,"title":"Node","x":15,"y":15,"data":{"type":"generic"}},{"id":6,"title":"Node","x":20,"y":20,"data":{"type":"generic"}}],"edges":[{"source":4,"target":3},{"source":3,"target":5},{"source":5,"target":2},{"source":2,"target":4},{"source":4,"target":6}],"weakEdges":[]}"""
 	class CC[T] { def unapply(a:Any):Option[T] = Some(a.asInstanceOf[T]) }
 
 	object MapNode extends CC[Map[String, Any]]
 	object node extends CC[List[Any]]
 	object title extends CC[String]
-	object source extends CC[Double]TorpongJuntree
+	object source extends CC[Double]
 
-
-
-
-	TorpongJuntreeTorpo Too dgdgdsnfkwepnewqtipoqklq;';l;ljop'lkjnlplkljk[pn[kpok]]
 	object target extends CC[Double]
 	object id extends CC[Double]
 	object x extends CC[Double]
 	object y extends CC[Double]
 
-	val writer = new PrintWriter(new File("output.txt"))
+	// val writer = new PrintWriter(new File("output.txt"))
 	val header: String = "\\documentclass{article}\n\t\\usepackage{tikz}\n\t\t\\begin{document}\n\t\t\t\\begin{tikzpicture}"
 	var middle: String = ""
 	val footer: String = "\n\t\t\t\\end{tikzpicture}\n\t\t\\end{document}"
@@ -64,6 +61,7 @@ object jsonToTikz extends App {
 	}
 
 	//write to file
-    writer.write(header+middle+footer)
-    writer.close()
+    // writer.write(header+middle+footer)
+    // writer.close()
+    val output = header+middle+footer
 }
