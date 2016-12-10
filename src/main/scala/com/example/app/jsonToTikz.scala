@@ -9,7 +9,6 @@ object jsonToTikz extends App {
 	object node extends CC[List[Any]]
 	object title extends CC[String]
 	object source extends CC[Double]
-
 	object target extends CC[Double]
 	object id extends CC[Double]
 	object x extends CC[Double]
