@@ -14,54 +14,63 @@ function addNode() {
   var nodeButton = document.getElementById('nodeButton');
   var nodeLabel = document.getElementById('nodeLabel').value;
 
+  
+
   singleton.title = nodeLabel;
   singleton.id = nodeId;
   nodeId ++;
 
+  console.log(nodeLabel)
+  if (nodeLabel == "") {
+    console.log(nodeId)
+    nodeLabel = nodeId;
+    singleton.title = nodeId.toString()
+    console.log(nodeLabel)
+  }
 
-    nodeButton.disabled = true;
-    console.log("sth clicked");
-    doCircle();
+  nodeButton.disabled = true;
+  console.log("sth clicked");
+  doCircle();
 
-    function doCircle() {
+  function doCircle() {
 
-      function drawCircle(x, y) {
-          console.log('Drawing circle at', x, y);
-          svg.append("circle")
-              // .attr('class', 'click-circle')
-              .attr("cx", x)
-              .attr("cy", y)
-              .attr("r", 23)
-              .attr("stroke","black")
-              .style("fill", "none");
-              
-          svg.append("text")
-              .attr("x", x - 6.5)
-              .attr("y", y + 5)
-              .text(nodeLabel)
-              .attr("fill", "black");
+    function drawCircle(x, y) {
+      console.log('Drawing circle at', x, y);
+      svg.append("circle")
+          // .attr('class', 'click-circle')
+          .attr("cx", x)
+          .attr("cy", y)
+          .attr("r", 23)
+          .attr("stroke","black")
+          .style("fill", "none");
+          
+      svg.append("text")
+          .attr("x", x - 6.5)
+          .attr("y", y + 5)
+          .text(nodeLabel)
+          .attr("fill", "black");
 
-          nodeButton.disabled = false;
-      }
-
-        svg.on('click', function() {
-
-            if (!clicked) {
-              var coords = d3.mouse(this);
-              // console.log(coords);
-
-              drawCircle(coords[0], coords[1]);
-              clicked = true;
-
-              singleton.x = coords[0];
-              singleton.y = coords[1];
-              console.log(singleton);
-
-              graph.nodes.push(singleton)
-              console.log(graph)
-            }
-        });
+      nodeButton.disabled = false;
     }
+
+    svg.on('click', function() {
+
+      if (!clicked) {
+        var coords = d3.mouse(this);
+        // console.log(coords);
+
+        drawCircle(coords[0], coords[1]);
+        clicked = true;
+
+        singleton.x = coords[0];
+        singleton.y = coords[1];
+        console.log(singleton);
+
+        graph.nodes.push(singleton)
+        console.log(graph)
+      }
+    });
+  }
 }
 
 function addEdge() {
@@ -78,6 +87,9 @@ function addEdge() {
   console.log("edgeTo: ", edgeTo)
 
   for(var i = 0; i < graph.nodes.length; i++) {
+
+    if (graph.nodes[i].title == null) {
+    }
 
     if (graph.nodes[i].title == edgeFrom) {
       console.log("from",graph.nodes[i])
@@ -148,17 +160,19 @@ function magic() {
 
 function magic2() {
 
-  data = {
-    "name": "john",
-    "girlfriend": "bow",
-    "gik": ["bossy", "taewon"]
-  }
+   data = {
+     "name": "john"
+//     "girlfriend": "bow",
+//     "gik": ["p'tow", "taewon"]
+   }
 
+    console.log()
   // console.log(graph)
 
   $.ajax({
     type: "POST",
     dataType: "json",
+    contentType: "application/json; charset=utf-8",
     url: "/john",
     data: data,
   });

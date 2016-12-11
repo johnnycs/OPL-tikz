@@ -10,6 +10,10 @@ import org.slf4j.{Logger, LoggerFactory}
 // JSON handling support from Scalatra
 import org.scalatra.json._
 
+import com.example.app._
+
+case class Profile(name: Option[String])
+
 
 class GraphController extends MyScalatraWebAppStack with JacksonJsonSupport {
 
@@ -25,11 +29,11 @@ class GraphController extends MyScalatraWebAppStack with JacksonJsonSupport {
 
   case class Graph(nodes: List[Node], edges: List[Edge], timestmp: Long)
 
+//  println(new Temp hello)
+
   object GraphData {
 
-  /**
-   * Some fake flowers data so we can simulate retrievals.
-   */
+
     val timestamp: Long = System.currentTimeMillis / 1000
 
     var all = Graph(
@@ -58,30 +62,42 @@ class GraphController extends MyScalatraWebAppStack with JacksonJsonSupport {
 
   // val logger =  LoggerFactory.getLogger(getClass)
   
-  case class Profile(name: String, girlfriend: String, gik: List[String])
   case class JohnGik(gik: String)
 
-  post("/john"){
+//  post("/john"){
+//
+//    try {
+//
+//      def a: List[String] = params.getOrElse("nodes","nodes not found")
+//      println(a)
+//
+////      JohnGik(a)
+//
+//
+//    }
+//    catch {
+//        case e : Exception => e.printStackTrace()
+//    }
+//
+//  }
+
+  post("/john") {
+
+    println(params.getOrElse("name","not found"))
 
     try {
+      println(request.body)
+      println(request.getHeaderNames())
+      def p:Profile = parsedBody.extract[Profile]
+      println(p)
 
-      def a: String = params.getOrElse("name","bossy")
-      println(a)
-
-      JohnGik(a)
-
-//      def a: String = params.k
-
-
-      // contentType = formats("json")
-      // def p:Profile = parsedBody.extract[Profile]
-      // println(p)
-    } 
+    }
     catch {
-        case e : Exception => e.printStackTrace()
+      case e : Exception => e.printStackTrace()
     }
 
   }
+
 
   get("/") {
     <html>

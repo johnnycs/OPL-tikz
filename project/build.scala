@@ -28,12 +28,13 @@ object MyScalatraWebAppBuild extends Build {
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
         "org.scalatra" %% "scalatra-json" % ScalatraVersion,
+        // "org.scala-lang" % "scala-reflect" % _,
+        // "org.scala-lang" % "scalap" % _,
         "org.json4s"   %% "json4s-jackson" % "3.5.0",
         "ch.qos.logback" % "logback-classic" % "1.1.5" % "runtime",
         "org.eclipse.jetty" % "jetty-webapp" % "9.2.15.v20160210" % "container",
         "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
       ),
-
       // javaOptions ++= Seq(
       //   "-Xdebug",
       //   "-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005"
