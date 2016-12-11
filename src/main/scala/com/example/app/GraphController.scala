@@ -191,9 +191,9 @@ class GraphController extends MyScalatraWebAppStack with JacksonJsonSupport {
   // }
 
   // enable hello-scalate
-  notFound {
-    response.setStatus(404)
-    "Not found"
-  }
+  // notFound {
+  //   response.setStatus(404)
+  //   "Not found"
+  // }
 
 }
