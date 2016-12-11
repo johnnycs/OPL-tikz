@@ -14,8 +14,6 @@ function addNode() {
   var nodeButton = document.getElementById('nodeButton');
   var nodeLabel = document.getElementById('nodeLabel').value;
 
-  
-
   singleton.title = nodeLabel;
   singleton.id = nodeId;
   nodeId ++;
@@ -31,6 +29,7 @@ function addNode() {
   nodeButton.disabled = true;
   console.log("sth clicked");
   doCircle();
+  document.getElementById('nodeLabel').value = "";
 
   function doCircle() {
 
@@ -64,10 +63,8 @@ function addNode() {
 
         singleton.x = coords[0];
         singleton.y = coords[1];
-        console.log(singleton);
 
         graph.nodes.push(singleton)
-        console.log(graph)
       }
     });
   }
@@ -75,21 +72,25 @@ function addNode() {
 
 function addEdge() {
 
-  console.log(graph.nodes)
+  var edgeButton = document.getElementById('edgeButton');  
+  edgeButton.disabled = true;
 
   var edge = {"source":null, "target":null};
 
+  // var edgeButton = document.getElementById('edgeButton');
   var edgeFrom = document.getElementById('edgeFrom').value;
   var edgeTo = document.getElementById('edgeTo').value;
   var x1, y1, xy1_id, x2, y2, xy2_id = null;
 
-  console.log("edgeFrom: ", edgeFrom)
-  console.log("edgeTo: ", edgeTo)
+
+  console.log(edgeFrom.length)
+  console.log(edgeTo.length)
+
+  if ((edgeFrom.length != 0) && (edgeTo.length != 0)) {
+    edgeButton.disabled = false;
+  }
 
   for(var i = 0; i < graph.nodes.length; i++) {
-
-    if (graph.nodes[i].title == null) {
-    }
 
     if (graph.nodes[i].title == edgeFrom) {
       console.log("from",graph.nodes[i])
@@ -104,6 +105,10 @@ function addEdge() {
       y2 = graph.nodes[i].y
       xy2_id = graph.nodes[i].id;
     }
+
+    // else {
+    //   edgeButton.disabled = true;
+    // }
   }
 
   // math stuff
@@ -134,6 +139,8 @@ function addEdge() {
     edge.target = xy2_id;
 
     graph.edges.push(edge)
+    document.getElementById('edgeFrom').value = "";
+    document.getElementById('edgeTo').value = "";
     console.log(graph)
 
 }
@@ -160,21 +167,20 @@ function magic() {
 
 function magic2() {
 
-   data = {
-     "name": "john",
-     "girlfriend": "bow",
-     "gik": ["p'tow", "taewon"]
-   }
+   // data = {
+   //   "name": "john",
+   //   "girlfriend": "bow",
+   //   "gik": ["p'tow", "taewon"]
+   // }
 
-    console.log()
   // console.log(graph)
 
   $.ajax({
     type: "POST",
     dataType: "json",
-//    contentType: "application/json; charset=utf-8",
+    contentType: "application/json",
     url: "/john",
-    data: data,
+    data: JSON.stringify(graph),
   });
 
 }

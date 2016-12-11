@@ -15,16 +15,6 @@ import com.example.app._
 
 case class Profile(name: String, girlfriend: String, gik: List[String])
 
-//object Profile {
-//  def profileFromParams(params: scalatra.Params): Profile = {
-////    println(params.getOrElse("gik", Some("temp")))
-//    new Profile(params.getOrElse("name", "Anonymous"),
-//                params.getOrElse("girlfriend", "Anonymous"),
-//                params.getOrElse("gik", None))
-//  }
-//}
-
-
 class GraphController extends MyScalatraWebAppStack with JacksonJsonSupport {
 
   protected implicit val jsonFormats: Formats = DefaultFormats.withBigDecimal
@@ -40,6 +30,16 @@ class GraphController extends MyScalatraWebAppStack with JacksonJsonSupport {
   case class Graph(nodes: List[Node], edges: List[Edge], timestmp: Long)
 
 //  println(new Temp hello)
+
+
+  // val input: String = """{"nodes":[{"id":2,"title":"Node","x":10,"y":10,"data":{"type":"generic"}},{"id":3,"title":"Node","x":15,"y":10,"data":
+  //  	{"type":"generic"}},{"id":4,"title":"Node","x":10,"y":15,"data":{"type":"generic"}},{"id":5,"title":"Node","x":15,"y":15,
+  //  	"data":{"type":"generic"}},{"id":6,"title":"Node","x":20,"y":20,"data":{"type":"generic"}}],"edges":[{"source":4,"target":3}
+  //  	,{"source":3,"target":5},{"source":5,"target":2},{"source":2,"target":4},{"source":4,"target":6}],"weakEdges":[]}"""
+
+  // val trying = new JsonToTikz(input);
+
+  // println(trying.TikzText)
 
   object GraphData {
 
@@ -95,13 +95,15 @@ class GraphController extends MyScalatraWebAppStack with JacksonJsonSupport {
 
 //    println(Profile.profileFromParams(params))
 
-    println(params.getOrElse("gik",Some()))
 
     try {
-//      println(request.body)
-//      println(request.getHeaderNames())
-//      def p:Profile = parsedBody.extract[Profile]
-//      println(p)
+
+      val input = request.body
+      println(input)
+
+      val toTikz = new JsonToTikz(input);
+
+      println(toTikz.TikzText)
 
     }
     catch {
