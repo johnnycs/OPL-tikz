@@ -6,13 +6,23 @@ import org.scalatra._
 import org.json4s.{DefaultFormats, Formats}
 
 import org.slf4j.{Logger, LoggerFactory}
+import org.scalatra
 
 // JSON handling support from Scalatra
 import org.scalatra.json._
-
+import scala.collection.immutable.Map
 import com.example.app._
 
-case class Profile(name: Option[String])
+case class Profile(name: String, girlfriend: String, gik: List[String])
+
+//object Profile {
+//  def profileFromParams(params: scalatra.Params): Profile = {
+////    println(params.getOrElse("gik", Some("temp")))
+//    new Profile(params.getOrElse("name", "Anonymous"),
+//                params.getOrElse("girlfriend", "Anonymous"),
+//                params.getOrElse("gik", None))
+//  }
+//}
 
 
 class GraphController extends MyScalatraWebAppStack with JacksonJsonSupport {
@@ -83,13 +93,15 @@ class GraphController extends MyScalatraWebAppStack with JacksonJsonSupport {
 
   post("/john") {
 
-    println(params.getOrElse("name","not found"))
+//    println(Profile.profileFromParams(params))
+
+    println(params.getOrElse("gik",Some()))
 
     try {
-      println(request.body)
-      println(request.getHeaderNames())
-      def p:Profile = parsedBody.extract[Profile]
-      println(p)
+//      println(request.body)
+//      println(request.getHeaderNames())
+//      def p:Profile = parsedBody.extract[Profile]
+//      println(p)
 
     }
     catch {

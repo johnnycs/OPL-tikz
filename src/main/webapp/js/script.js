@@ -161,9 +161,9 @@ function magic() {
 function magic2() {
 
    data = {
-     "name": "john"
-//     "girlfriend": "bow",
-//     "gik": ["p'tow", "taewon"]
+     "name": "john",
+     "girlfriend": "bow",
+     "gik": ["p'tow", "taewon"]
    }
 
     console.log()
@@ -172,7 +172,7 @@ function magic2() {
   $.ajax({
     type: "POST",
     dataType: "json",
-    contentType: "application/json; charset=utf-8",
+//    contentType: "application/json; charset=utf-8",
     url: "/john",
     data: data,
   });
