@@ -53,6 +53,7 @@ class GraphController extends MyScalatraWebAppStack with JacksonJsonSupport {
       
   }
 
+
   get("/graph"){
 
     contentType = formats("json")
@@ -185,6 +186,14 @@ class GraphController extends MyScalatraWebAppStack with JacksonJsonSupport {
     }
   }
 
+  get("/bossy"){
+      // var saveEdges = List[(Int,Int)]
+      // var saveWeakEdges = List[(Int,Int)]
+      // var newwhat = List[(Int, Int)]
+      response.setHeader("Content-Disposition","attachment; filename=bossy.txt");
+      "bossy wanna play dota"
+      // var blob = new Blob([window.JSON.stringify({"nodes": newwhat, "edges": saveEdges, "weakEdges": saveWeakEdges})], {type: "text/plain;charset=utf-8"});
+  }
   // Actions that return byte arrays render a binary response
   // get("/report.pdf") {
   //   contentType = "application/pdf"
