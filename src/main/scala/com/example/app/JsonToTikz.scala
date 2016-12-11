@@ -29,12 +29,11 @@ class JsonToTikz (val line: String) {
 	// final output
 	var TikzText = header+writeNode()+writeEdges()+footer
 
-
 	// PARSE DATA JSON
 
 	// json string -> List of Node (List[(String, Int, Int, Int)])
 	// each Node have titles, NodeId , Node position x, Node position y
-	def parseStringJsonNode(): List[(String, Int, Int, Int)] = {
+	def parseStringJsonNode(): List[(String, Int, Double, Double)] = {
 		val allNode = for {
 		    Some(MapNode(map)) <- List(JSON.parseFull(lines))
 		    node(nodes) = map("nodes")
@@ -44,7 +43,7 @@ class JsonToTikz (val line: String) {
 		    x(xs) = node("x")
 		    y(ys) = node("y")
 		} yield {
-		    (titles, ids.toInt, xs.toInt, ys.toInt)
+		    (titles, ids.toInt, (xs/20)%.2f, (ys/20)%.2f)
 		}
 		allNode
 	}
@@ -72,7 +71,7 @@ class JsonToTikz (val line: String) {
 			var getid = a._2
 			var getx = a._3
 			var gety = a._4
-			output = output + f"\n\t\t\t\\node at ($getx,$gety) [circle,draw] ($getid) {$gettitle};"
+			output = output + f"\n\t\t\t\\node at ($getx%.1f,$gety%.1f) [circle,draw] ($getid) {$gettitle};"
 		}
 		output
 	}
@@ -86,14 +85,6 @@ class JsonToTikz (val line: String) {
 		}
 		output
 	}
-
-	// uncomment this part to write a file
-
-	// val lines = scala.io.Source.fromFile("mydag.json").mkString
-	// val writer = new PrintWriter(new File("output.txt"))
-	// val TikzEdgeText2 = writeEdges(parseStringJsonEdge(lines))
-	// writer.write(header+TikzEdgeText2+TikzNodeText2+footer)
-	// writer.close()
 }
 // object FirstTry{
 // 	def main(args: Array[String]) {
@@ -102,6 +93,7 @@ class JsonToTikz (val line: String) {
 // 	"data":{"type":"generic"}},{"id":6,"title":"Node","x":20,"y":20,"data":{"type":"generic"}}],"edges":[{"source":4,"target":3}
 // 	,{"source":3,"target":5},{"source":5,"target":2},{"source":2,"target":4},{"source":4,"target":6}],"weakEdges":[]}"""
 //       	val trying = new JsonToTikz(input);
+//       	println(trying.TikzText)
 
 //    }
 // }
