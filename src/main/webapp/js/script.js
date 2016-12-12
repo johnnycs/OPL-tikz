@@ -6,6 +6,7 @@ var svg = d3.select("#chart").append("svg")
 
 var graph = {"nodes": [], "edges": []};
 var nodeId = 0;
+var allNodes = [];
 
 function addNode() {
 
@@ -27,14 +28,14 @@ function addNode() {
   }
 
   nodeButton.disabled = true;
-  console.log("sth clicked");
+  // console.log("sth clicked");
   doCircle();
   document.getElementById('nodeLabel').value = "";
 
   function doCircle() {
 
     function drawCircle(x, y) {
-      console.log('Drawing circle at', x, y);
+      // console.log('Drawing circle at', x, y);
       svg.append("circle")
           // .attr('class', 'click-circle')
           .attr("cx", x)
@@ -65,6 +66,7 @@ function addNode() {
         singleton.y = coords[1];
 
         graph.nodes.push(singleton)
+        allNodes.push(nodeLabel.toString())
       }
     });
   }
@@ -73,7 +75,6 @@ function addNode() {
 function addEdge() {
 
   var edgeButton = document.getElementById('edgeButton');  
-  edgeButton.disabled = true;
 
   var edge = {"source":null, "target":null};
 
@@ -83,65 +84,64 @@ function addEdge() {
   var x1, y1, xy1_id, x2, y2, xy2_id = null;
 
 
-  console.log(edgeFrom.length)
-  console.log(edgeTo.length)
+  // console.log(edgeFrom.length)
+  // console.log(edgeTo.length)
 
-  if ((edgeFrom.length != 0) && (edgeTo.length != 0)) {
-    edgeButton.disabled = false;
+  if ( !(allNodes.includes(edgeFrom)) || !(allNodes.includes(edgeTo))) {
+    alert("Node(s) not avaiblable")
   }
 
-  for(var i = 0; i < graph.nodes.length; i++) {
+  else {
 
-    if (graph.nodes[i].title == edgeFrom) {
-      console.log("from",graph.nodes[i])
-      x1 = graph.nodes[i].x;
-      y1 = graph.nodes[i].y;
-      xy1_id = graph.nodes[i].id;
+    for(var i = 0; i < graph.nodes.length; i++) {
+
+      if (graph.nodes[i].title == edgeFrom) {
+        console.log("from",graph.nodes[i])
+        x1 = graph.nodes[i].x;
+        y1 = graph.nodes[i].y;
+        xy1_id = graph.nodes[i].id;
+      }
+      if (graph.nodes[i].title == edgeTo) {
+        console.log("to",graph.nodes[i])
+        x2 = graph.nodes[i].x
+        y2 = graph.nodes[i].y
+        xy2_id = graph.nodes[i].id;
+      }
     }
 
-    if (graph.nodes[i].title == edgeTo) {
-      console.log("to",graph.nodes[i])
-      x2 = graph.nodes[i].x
-      y2 = graph.nodes[i].y
-      xy2_id = graph.nodes[i].id;
-    }
+    // math stuff
+    var refX = 23 + (15 * 2)
 
-    // else {
-    //   edgeButton.disabled = true;
-    // }
+    // draw edge and arrow
+    svg.append("svg:defs").append("svg:marker")
+      .attr("id", "triangle")
+      .attr("refX", refX)
+      .attr("refY", 6)
+      .attr("markerWidth", 15)
+      .attr("markerHeight", 15)
+      .attr("orient", "auto")
+      .append("path")
+      .attr("d", "M 0 0 12 6 0 12 3 6")
+      .style("fill", "black");
+
+    svg.append("line")
+      .attr("x1",  x1)
+      .attr("y1", y1)
+      .attr("x2", x2)
+      .attr("y2", y2)
+
+      .attr("stroke-width", 1)
+      .attr("stroke", "black")
+      .attr("marker-end", "url(#triangle)");
+
+      edge.source = xy1_id;
+      edge.target = xy2_id;
+
+      graph.edges.push(edge)
+      document.getElementById('edgeFrom').value = "";
+      document.getElementById('edgeTo').value = "";
+      console.log(graph)
   }
-
-  // math stuff
-  var refX = 23 + (15 * 2)
-
-  svg.append("svg:defs").append("svg:marker")
-    .attr("id", "triangle")
-    .attr("refX", refX)
-    .attr("refY", 6)
-    .attr("markerWidth", 15)
-    .attr("markerHeight", 15)
-    .attr("orient", "auto")
-    .append("path")
-    .attr("d", "M 0 0 12 6 0 12 3 6")
-    .style("fill", "black");
-
-  svg.append("line")
-    .attr("x1",  x1)
-    .attr("y1", y1)
-    .attr("x2", x2)
-    .attr("y2", y2)
-
-    .attr("stroke-width", 1)
-    .attr("stroke", "black")
-    .attr("marker-end", "url(#triangle)");
-
-    edge.source = xy1_id;
-    edge.target = xy2_id;
-
-    graph.edges.push(edge)
-    document.getElementById('edgeFrom').value = "";
-    document.getElementById('edgeTo').value = "";
-    console.log(graph)
 
 }
 
@@ -185,11 +185,11 @@ function downloadTikz() {
 
 function clearGraph() {
 
-//   svg.selectAll('*').remove();
-//   graph.nodes.splice(0,graph.nodes.length)
-//   graph.edges.splice(0,graph.edges.length)
-//   console.log(graph)
-//   console.log("clear")
+  // svg.selectAll('*').remove();
+  // graph.nodes.splice(0,graph.nodes.length)
+  // graph.edges.splice(0,graph.edges.length)
+  // console.log(graph)
+  // console.log("clear")
 
 }
 

@@ -35,21 +35,11 @@ class GraphController extends MyScalatraWebAppStack with JacksonJsonSupport {
 
     try {
 
-      // response.setHeader("Content-Disposition","attachment; filename=tikz.txt");
-      // println(response)
-      println("start john")
-
       Input = request.body
-      println(Input)
 
       val toTikz = new JsonToTikz(Input);
-      println(toTikz.TikzText)
 
-      // println("end john")
-
-      // val wholeGraph: Map[String, String] = Map()
-
-//      toTikz.TikzText
+      // status OK 200
       "OK"
     }
     catch {
@@ -105,18 +95,13 @@ class GraphController extends MyScalatraWebAppStack with JacksonJsonSupport {
 
   get("/downloadTikz"){
 
-    println("start downloadTikz")
-
     response.setHeader("Content-Disposition","attachment; filename=tikz.txt");
 
     val toTikz = new JsonToTikz(Input);
     println(toTikz.TikzText)
 
-    println("end downloadTikz")
-
     toTikz.TikzText
 
-//    "asdfasd"
 
   }
 
