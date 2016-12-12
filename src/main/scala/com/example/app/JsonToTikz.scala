@@ -1,4 +1,4 @@
-package com.example.app
+// package com.example.app
 
 import scala.util.parsing.json._
 import java.io._
@@ -29,8 +29,7 @@ class JsonToTikz (val line: String) {
 	val footer: String = "\n\t\t\t\\end{tikzpicture}\n\t\t\\end{document}"
 
 	// final output
-	var TikzText = header+writeNode()+writeEdges()+footer
-
+	var TikzText = header+writeNode()+writeEdges()+footer+"\n%"+lines
 	// PARSE DATA JSON
 
 	// json string -> List of Node (List[(String, Int, Int, Int)])
@@ -83,7 +82,7 @@ class JsonToTikz (val line: String) {
 		for( b <- parseStringJsonEdge()){
 			var getsource = b._1
 			var gettarget = b._2
-			output = output + f"\n\t\t\t\\draw[->] ($getsource) to[] ($gettarget);"
+			output = output + f"\n\t\t\t\\draw[->,line width=3pt] ($getsource) to[] ($gettarget);"
 		}
 		output
 	}
