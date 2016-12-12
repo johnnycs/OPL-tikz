@@ -1,0 +1,8 @@
+\documentclass{article}
+	\usepackage{tikz}
+		\begin{document}
+			\begin{tikzpicture}
+			\node at (13.2,-4.3) [circle,draw] (0) {A};
+			\node at (7.0,-7.7) [circle,draw] (1) {2};
+			\end{tikzpicture}
+		\end{document}

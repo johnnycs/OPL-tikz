@@ -45,7 +45,7 @@ class JsonToTikz (val line: String) {
 		    x(xs) = node("x")
 		    y(ys) = node("y")
 		} yield {
-		    (titles, ids.toInt, (xs/20)%.2f, (ys/20)%.2f)
+		    (titles, ids.toInt, (xs/30), -(ys/30))
 		}
 		allNode
 	}
@@ -83,7 +83,7 @@ class JsonToTikz (val line: String) {
 		for( b <- parseStringJsonEdge()){
 			var getsource = b._1
 			var gettarget = b._2
-			output = output + f"\n\t\t\t\\draw[-] ($getsource) to[] ($gettarget);"
+			output = output + f"\n\t\t\t\\draw[->] ($getsource) to[] ($gettarget);"
 		}
 		output
 	}
