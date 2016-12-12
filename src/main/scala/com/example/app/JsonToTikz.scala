@@ -82,19 +82,19 @@ class JsonToTikz (val line: String) {
 		for( b <- parseStringJsonEdge()){
 			var getsource = b._1
 			var gettarget = b._2
-			output = output + f"\n\t\t\t\\draw[-] ($getsource) to[] ($gettarget);"
+			output = output + f"\n\t\t\t\\draw[->,line width=3pt] ($getsource) to[] ($gettarget);"
 		}
 		output
 	}
 }
-object FirstTry{
-	def main(args: Array[String]) {
-		val input: String = """{"nodes":[{"id":2,"title":"Node","x":10,"y":10,"data":{"type":"generic"}},{"id":3,"title":"Node","x":15,"y":10,"data":
-	{"type":"generic"}},{"id":4,"title":"Node","x":10,"y":15,"data":{"type":"generic"}},{"id":5,"title":"Node","x":15,"y":15,
-	"data":{"type":"generic"}},{"id":6,"title":"Node","x":20,"y":20,"data":{"type":"generic"}}],"edges":[{"source":4,"target":3}
-	,{"source":3,"target":5},{"source":5,"target":2},{"source":2,"target":4},{"source":4,"target":6}],"weakEdges":[]}"""
-      	val trying = new JsonToTikz(input);
-      	println(trying.TikzText)
+// object FirstTry{
+// 	def main(args: Array[String]) {
+// 		val input: String = """{"nodes":[{"id":2,"title":"Node","x":10,"y":10,"data":{"type":"generic"}},{"id":3,"title":"Node","x":15,"y":10,"data":
+// 	{"type":"generic"}},{"id":4,"title":"Node","x":10,"y":15,"data":{"type":"generic"}},{"id":5,"title":"Node","x":15,"y":15,
+// 	"data":{"type":"generic"}},{"id":6,"title":"Node","x":20,"y":20,"data":{"type":"generic"}}],"edges":[{"source":4,"target":3}
+// 	,{"source":3,"target":5},{"source":5,"target":2},{"source":2,"target":4},{"source":4,"target":6}],"weakEdges":[]}"""
+//       	val trying = new JsonToTikz(input);
+//       	println(trying.TikzText)
 
-   }
-}
+//    }
+// }
