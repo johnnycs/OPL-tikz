@@ -165,39 +165,32 @@ function magic() {
 
 }
 
-function magic2() {
-
-   // data = {
-   //   "name": "john",
-   //   "girlfriend": "bow",
-   //   "gik": ["p'tow", "taewon"]
-   // }
-
-  // console.log(graph)
+function downloadTikz() {
 
   $.ajax({
-    type: "POST",
-    dataType: "json",
-    contentType: "application/json",
-    url: "/john",
-    data: JSON.stringify(graph),
-  });
+            type: "POST",
+            // async: false,
+            url: '/toTikz',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify(graph),
+            complete: function(data, jqXHR){
+                // console.log(jqXHR.status);
+                window.location.href= "http://localhost:8080/downloadTikz";
+            }
+        });
 
 }
 
 
-// function magic(){
-//   var jqxhr = $.ajax( "/graph" )
-//     .done(function() {
-//       alert( "success" );
-//     })
-//     .fail(function() {
-//       alert( "error" );
-//     })
-// }
+function clearGraph() {
 
-// function hello(){
-//   alert('hello')
-// }
+//   svg.selectAll('*').remove();
+//   graph.nodes.splice(0,graph.nodes.length)
+//   graph.edges.splice(0,graph.edges.length)
+//   console.log(graph)
+//   console.log("clear")
+
+}
 
       
