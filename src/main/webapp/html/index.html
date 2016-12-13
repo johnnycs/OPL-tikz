@@ -50,6 +50,24 @@
               <button class="btn btn-primary" onclick="addEdge()" id="edgeButton">Create Edge</button>
             </div>
 
+            <!-- <div>
+              <input type="file" class="form-control" id="fileInput">
+            </div>
+ -->
+            <div class="btn btn-file">
+                Browse <input type="file" id="fileInput">
+            </div>
+
+            <br>
+
+            <div class="form-group">
+              <button class="btn btn-primary" onclick="drawGraph()">Draw Graph from file</button>
+            </div>
+
+            <div class="form-group">
+              <button class="btn btn-primary" onclick="downloadTikz()">Download</button>
+            </div>
+
         </fieldset>
 
       </div>
@@ -59,8 +77,7 @@
     
     <br>
 
-    <button onclick="magic()">Magic</button>
-    <button onclick="downloadTikz();clearGraph()">Download</button>
+    <!-- <button onclick="magic()">Magic</button> -->
     <!-- <button onclick="downloadTikz();clearGraph()">Download</button> -->
 
 

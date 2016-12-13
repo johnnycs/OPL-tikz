@@ -1,12 +1,64 @@
 
 var svg = d3.select("#chart").append("svg")
                              .attr("width", 640)
-                             .attr("height", 360)
+                             .attr("height", 420)
                              .style("border", "1px black solid");
 
 var graph = {"nodes": [], "edges": []};
 var nodeId = 0;
 var allNodes = [];
+
+var tikz = "";
+var ArrayWords = [];
+
+window.onload = function() {
+    var fileInput = document.getElementById('fileInput');
+
+    fileInput.addEventListener('change', function(e) {
+      var file = fileInput.files[0];
+      var textType = /text.*/;
+
+      if (file.type.match(textType)) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          // console.log(reader.result);
+          tikz = reader.result.split("\n")
+          for (var i = tikz.length - 1; i >= 0; i--) {
+                  ArrayWords.push(tikz[i]);
+          };
+          tikz = JSON.parse(ArrayWords[0].substr(1))
+          console.log(tikz)
+        }
+
+        reader.readAsText(file);  
+      } 
+      else {
+        fileDisplayArea.innerText = "File not supported!"
+      }
+    });
+}
+
+function drawCircle(x, y, title) {
+
+  console.log('Drawing circle at', x, y);
+  svg.append("circle")
+      // .attr('class', 'click-circle')
+      .attr("cx", x)
+      .attr("cy", y)
+      .attr("r", 23)
+      .attr("stroke","black")
+      .style("fill", "none");
+      
+  svg.append("text")
+      .attr("x", x - 6.5)
+      .attr("y", y + 5)
+      .text(title)
+      .attr("fill", "black");
+
+  nodeButton.disabled = false;
+}
+
 
 function addNode() {
 
@@ -34,32 +86,13 @@ function addNode() {
 
   function doCircle() {
 
-    function drawCircle(x, y) {
-      // console.log('Drawing circle at', x, y);
-      svg.append("circle")
-          // .attr('class', 'click-circle')
-          .attr("cx", x)
-          .attr("cy", y)
-          .attr("r", 23)
-          .attr("stroke","black")
-          .style("fill", "none");
-          
-      svg.append("text")
-          .attr("x", x - 6.5)
-          .attr("y", y + 5)
-          .text(nodeLabel)
-          .attr("fill", "black");
-
-      nodeButton.disabled = false;
-    }
-
     svg.on('click', function() {
 
       if (!clicked) {
         var coords = d3.mouse(this);
         // console.log(coords);
 
-        drawCircle(coords[0], coords[1]);
+        drawCircle(coords[0], coords[1], nodeLabel);
         clicked = true;
 
         singleton.x = coords[0];
@@ -74,11 +107,7 @@ function addNode() {
 
 function addEdge() {
 
-  var edgeButton = document.getElementById('edgeButton');  
-
   var edge = {"source":null, "target":null};
-
-  // var edgeButton = document.getElementById('edgeButton');
   var edgeFrom = document.getElementById('edgeFrom').value;
   var edgeTo = document.getElementById('edgeTo').value;
   var x1, y1, xy1_id, x2, y2, xy2_id = null;
@@ -145,52 +174,59 @@ function addEdge() {
 
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
-
-function magic() {
-
-  function onSuc(data){
-    console.log(data)
-  }
-
-  function onFai(){}
-
-  $.ajax({
-    dataType: "json",
-    url: "/graph",
-    data: null,
-    success: onSuc,
-    fail: onFai
-  });
-
-}
-
 function downloadTikz() {
 
-  $.ajax({
-            type: "POST",
-            // async: false,
-            url: '/toTikz',
-            contentType: 'application/json',
-            dataType: 'json',
-            data: JSON.stringify(graph),
-            complete: function(data, jqXHR){
-                // console.log(jqXHR.status);
-                window.location.href= "http://localhost:8080/downloadTikz";
-            }
-        });
+  var gNodes = graph.nodes
+  var gEdges = graph.edges
 
+  if (gNodes.length == 0) {
+    alert("Graph is empty")
+  }
+
+  else {
+
+    $.ajax({
+          type: "POST",
+          // async: false,
+          url: '/toTikz',
+          contentType: 'application/json',
+          dataType: 'json',
+          data: JSON.stringify(graph),
+          complete: function(data, jqXHR){
+              // console.log(jqXHR.status);
+              window.location.href= "http://localhost:8080/downloadTikz";
+          }
+      });
+
+    svg.selectAll('*').remove();
+    gNodes.splice(0,gNodes.length)
+    gEdges.splice(0,gEdges.length)
+    allNodes.splice(0,allNodes.length)
+    nodeId = 0;
+    console.log(graph)
+    console.log("clear")
+
+  }
 }
 
+function drawGraph() {
 
-function clearGraph() {
+  console.log(tikz.nodes)
+  var x1, y1, xy1_id, x2, y2, xy2_id = null;
+  var xs = [];
+  var ys = [];
 
-  // svg.selectAll('*').remove();
-  // graph.nodes.splice(0,graph.nodes.length)
-  // graph.edges.splice(0,graph.edges.length)
-  // console.log(graph)
-  // console.log("clear")
+  graph = tikz
+
+  gNodes = graph.nodes
+  gEdges = graph.edges
+
+  for(var i = 0; i < gNodes.length; i++) {
+    drawCircle(gNodes[i].x,gNodes[i].y,gNodes[i].title)
+    allNodes.push(gNodes[i].title)
+    xs.push(gNodes[i].x)
+    ys.push(gNodes[i].y)
+    nodeId ++;
+  }
 
 }
-
-      

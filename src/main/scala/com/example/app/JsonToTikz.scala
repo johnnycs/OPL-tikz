@@ -1,4 +1,4 @@
-// package com.example.app
+package com.example.app
 
 import scala.util.parsing.json._
 import java.io._
